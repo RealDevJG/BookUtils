@@ -1,0 +1,12 @@
+{
+	"required": true,
+	"package": "me.devjg.bookutils.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"ReadOnlyBookArrowsMixin",
+		"EditableBookArrowsMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

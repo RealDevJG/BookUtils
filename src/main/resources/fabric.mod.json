@@ -1,0 +1,30 @@
+{
+	"schemaVersion": 1,
+	"id": "devjg-bookutils",
+	"version": "${version}",
+	"name": "BookUtils",
+	"description": "A simple utility mod to make using books easier",
+	"authors": [
+		"DevJG"
+	],
+	"contact": {
+		"homepage": "https://discord.gg/b35rQvS"
+	},
+	"license": "MPL-2.0",
+	"icon": "assets/devjg-bookutils/BookUtils.png",
+	"environment": "client",
+	"entrypoints": {
+		"main": [
+			"me.devjg.bookutils.BookUtils"
+		]
+	},
+	"mixins": [
+		"devjg-bookutils.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.12",
+		"minecraft": ">=1.14.0",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
