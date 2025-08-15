@@ -12,10 +12,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(BookScreen.class)
 abstract class ReadOnlyBookArrowsMixin {
 	@Shadow private int pageIndex;
-	@Shadow abstract void updatePageButtons();
-	@Shadow abstract int getPageCount();
 	@Shadow private PageTurnWidget nextPageButton;
 	@Shadow private PageTurnWidget previousPageButton;
+
+	@Shadow abstract void updatePageButtons();
+	@Shadow abstract int getPageCount();
 
 	@Inject(method = "goToPreviousPage", at = @At("HEAD"), cancellable = true)
 	private void onGoToPreviousPage(CallbackInfo ci) {

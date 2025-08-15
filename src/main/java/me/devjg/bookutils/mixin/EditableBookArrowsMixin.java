@@ -12,12 +12,11 @@ import net.minecraft.client.gui.widget.PageTurnWidget;
 @Mixin(BookEditScreen.class)
 abstract class EditableBookArrowsMixin {
 	@Shadow private int currentPage;
-	@Shadow private boolean signing;
 	@Shadow private PageTurnWidget previousPageButton;
 
 	@Shadow abstract int countPages();
-	@Shadow abstract void updateButtons();
-	@Shadow abstract void changePage();
+	@Shadow abstract void updatePreviousPageButtonVisibility();
+	@Shadow abstract void updatePage();
 	@Shadow abstract void appendNewPage();
 
 	@Inject(method = "openPreviousPage", at = @At("HEAD"), cancellable = true)
@@ -28,14 +27,15 @@ abstract class EditableBookArrowsMixin {
 		int maxValue = countPages();
 		currentPage = (currentPage - 1 + maxValue) % maxValue;
 
-		updateButtons();
-		changePage();
+		updatePage();
+		updatePreviousPageButtonVisibility();
 
 		ci.cancel();
 	}
 
-	@Inject(method = "updateButtons", at = @At("TAIL"))
+	@Inject(method = "updatePreviousPageButtonVisibility", at = @At("HEAD"), cancellable = true)
 	private void onUpdateButtons(CallbackInfo ci) {
-		previousPageButton.visible = !signing;
+		previousPageButton.visible = true;
+		ci.cancel();
 	}
 }
