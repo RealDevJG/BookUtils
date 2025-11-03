@@ -1,13 +1,12 @@
-package me.devjg.bookutils.mixin;
+package me.devjg.booker.mixin;
 
+import net.minecraft.client.gui.screen.ingame.BookEditScreen;
+import net.minecraft.client.gui.widget.PageTurnWidget;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import net.minecraft.client.gui.screen.ingame.BookEditScreen;
-import net.minecraft.client.gui.widget.PageTurnWidget;
 
 @Mixin(BookEditScreen.class)
 abstract class EditableBookArrowsMixin {

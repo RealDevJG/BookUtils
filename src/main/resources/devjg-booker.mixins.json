@@ -1,6 +1,6 @@
 {
 	"required": true,
-	"package": "me.devjg.bookutils.mixin",
+	"package": "me.devjg.booker.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
 		"ReadOnlyBookArrowsMixin",

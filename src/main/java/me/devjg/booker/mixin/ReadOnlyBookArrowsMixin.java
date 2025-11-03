@@ -1,4 +1,4 @@
-package me.devjg.bookutils.mixin;
+package me.devjg.booker.mixin;
 
 import net.minecraft.client.gui.screen.ingame.BookScreen;
 import net.minecraft.client.gui.widget.PageTurnWidget;
