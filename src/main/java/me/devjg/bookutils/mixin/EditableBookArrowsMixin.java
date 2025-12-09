@@ -1,41 +1,40 @@
 package me.devjg.bookutils.mixin;
 
+import net.minecraft.client.gui.screens.inventory.BookEditScreen;
+import net.minecraft.client.gui.screens.inventory.PageButton;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.minecraft.client.gui.screen.ingame.BookEditScreen;
-import net.minecraft.client.gui.widget.PageTurnWidget;
-
 @Mixin(BookEditScreen.class)
 abstract class EditableBookArrowsMixin {
 	@Shadow private int currentPage;
-	@Shadow private boolean signing;
-	@Shadow private PageTurnWidget previousPageButton;
+	@Shadow private boolean isSigning;
+	@Shadow private PageButton backButton;
 
-	@Shadow abstract int countPages();
-	@Shadow abstract void updateButtons();
-	@Shadow abstract void changePage();
-	@Shadow abstract void appendNewPage();
+	@Shadow protected abstract int getNumPages();
+	@Shadow protected abstract void updateButtonVisibility();
+	@Shadow protected abstract void clearDisplayCacheAfterPageChange();
+	@Shadow protected abstract void appendPageToBook();
 
-	@Inject(method = "openPreviousPage", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "pageBack", at = @At("HEAD"), cancellable = true)
 	private void onOpenPreviousPage(CallbackInfo ci) {
 		if (currentPage == 0)
-			appendNewPage();
+			appendPageToBook();
 
-		int maxValue = countPages();
+		int maxValue = getNumPages();
 		currentPage = (currentPage - 1 + maxValue) % maxValue;
 
-		updateButtons();
-		changePage();
+		updateButtonVisibility();
+		clearDisplayCacheAfterPageChange();
 
 		ci.cancel();
 	}
 
-	@Inject(method = "updateButtons", at = @At("TAIL"))
+	@Inject(method = "updateButtonVisibility", at = @At("TAIL"))
 	private void onUpdateButtons(CallbackInfo ci) {
-		previousPageButton.visible = !signing;
+		backButton.visible = !isSigning;
 	}
 }
