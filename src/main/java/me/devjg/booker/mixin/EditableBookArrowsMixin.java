@@ -1,7 +1,7 @@
 package me.devjg.booker.mixin;
 
-import net.minecraft.client.gui.screen.ingame.BookEditScreen;
-import net.minecraft.client.gui.widget.PageTurnWidget;
+import net.minecraft.client.gui.screens.inventory.BookEditScreen;
+import net.minecraft.client.gui.screens.inventory.PageButton;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -11,30 +11,30 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(BookEditScreen.class)
 abstract class EditableBookArrowsMixin {
 	@Shadow private int currentPage;
-	@Shadow private PageTurnWidget previousPageButton;
+	@Shadow private PageButton backButton;
 
-	@Shadow abstract int countPages();
-	@Shadow abstract void updatePreviousPageButtonVisibility();
-	@Shadow abstract void updatePage();
-	@Shadow abstract void appendNewPage();
+	@Shadow protected abstract int getNumPages();
+	@Shadow protected abstract void updateButtonVisibility();
+	@Shadow protected abstract void updatePageContent();
+	@Shadow protected abstract void appendPageToBook();
 
-	@Inject(method = "openPreviousPage", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "pageBack", at = @At("HEAD"), cancellable = true)
 	private void onOpenPreviousPage(CallbackInfo ci) {
 		if (currentPage == 0)
-			appendNewPage();
+			appendPageToBook();
 
-		int maxValue = countPages();
+		int maxValue = getNumPages();
 		currentPage = (currentPage - 1 + maxValue) % maxValue;
 
-		updatePage();
-		updatePreviousPageButtonVisibility();
+		updatePageContent();
+		updateButtonVisibility();
 
 		ci.cancel();
 	}
 
-	@Inject(method = "updatePreviousPageButtonVisibility", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "updateButtonVisibility", at = @At("HEAD"), cancellable = true)
 	private void onUpdateButtons(CallbackInfo ci) {
-		previousPageButton.visible = true;
+		backButton.visible = true;
 		ci.cancel();
 	}
 }
