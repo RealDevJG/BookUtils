@@ -11,7 +11,7 @@
 		"homepage": "https://discord.gg/b35rQvS"
 	},
 	"license": "MPL-2.0",
-	"icon": "assets/devjg-booker/BookUtils.png",
+	"icon": "assets/devjg-booker/booker.png",
 	"environment": "client",
 	"entrypoints": {
 		"main": [
@@ -22,8 +22,8 @@
         "devjg-booker.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.18.4",
-		"minecraft": "26.1",
+		"fabricloader": ">=0.19.3",
+		"minecraft": "26.2",
 		"java": ">=25"
 	}
 }
